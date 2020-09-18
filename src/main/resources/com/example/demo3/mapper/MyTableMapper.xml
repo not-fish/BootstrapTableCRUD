@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.example.demo3.mapper.MyTableMapper">
+
+    <select id="getTableById" resultType="com.example.demo3.dto.MyTableDTO">
+        SELECT * FROM mytable02 WHERE id = #{id}
+    </select>
+
+    <select id="getAll" resultType="com.example.demo3.dto.MyTableDTO">
+            SELECT * FROM mytable02
+    </select>
+
+    <update id="updateTable" parameterType="com.example.demo3.dto.MyTableDTO">
+            UPDATE mytable02
+            <trim prefix="set" suffixOverrides=",">
+                <if test="name != null and name != ''">name=#{name},</if>
+                <if test="phone != null and phone != ''">phone=#{phone}</if>
+            </trim>
+            WHERE id = #{id}
+    </update>
+
+    <delete id="deleteTable" parameterType="com.example.demo3.dto.MyTableDTO">
+            DELETE FROM mytable02
+            WHERE id = #{id}
+    </delete>
+
+    <insert id="addTable" parameterType="com.example.demo3.dto.MyTableDTO">
+            INSERT INTO mytable02
+            <trim prefix="(" suffix=')' suffixOverrides=",">
+                <if test="id != null and id != ''">id,</if>
+                <if test="name != null and name != ''">name,</if>
+                <if test="phone != null and phone != ''">phone,</if>
+            </trim>
+
+            <trim prefix="values (" suffix=")" suffixOverrides=",">
+                <if test="id != null and id != ''">#{id},</if>
+                <if test="name != null and name != ''">#{name},</if>
+                <if test="phone != null and phone != ''">#{phone},</if>
+            </trim>
+    </insert>
+
+    <select id="queryTable" parameterType="com.example.demo3.dto.MyTableDTO" resultType="com.example.demo3.dto.MyTableDTO">
+            SELECT * FROM mytable02
+            WHERE
+            <trim >
+                <if test="id != null and id != ''">id=</if>
+                <if test="name != null and name != ''">name=</if>
+                <if test="phone != null and phone != ''">phone=</if>
+            </trim>
+
+            <trim>
+                <if test="id != null and id != ''">#{id}</if>
+                <if test="name != null and name != ''">#{name}</if>
+                <if test="phone != null and phone != ''">#{phone}</if>
+            </trim>
+    </select>
+
+</mapper>
