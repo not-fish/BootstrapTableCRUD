@@ -4,6 +4,33 @@ public class MyTableDTO {
     private String id;
     private String name;
     private String phone;
+    private String date;
+    private String status;
+    private String user_img;
+
+    public String getUser_img() {
+        return user_img;
+    }
+
+    public void setUser_img(String user_img) {
+        this.user_img = user_img;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public String getId() {
         return id;
@@ -27,6 +54,9 @@ public class MyTableDTO {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
+                ", date='" + date + '\'' +
+                ", status='" + status + '\'' +
+                ", user_img='" + user_img + '\'' +
                 '}';
     }
 
