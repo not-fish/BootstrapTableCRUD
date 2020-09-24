@@ -273,7 +273,19 @@
         $('#myModalAdd').modal('hide');
         $('#teacher_table').bootstrapTable('refresh');
         $("input[type=reset]").trigger("click");
+        $("#selectImg").text("选择图片");
         $("#img_add_show").attr("src","");
+        $("#add_text").text("--");
+        $("#basicMsg").attr("class","tab-pane fade in active");
+        $("#basicMsg_add").attr("class","tab-pane fade in active");
+        $("#userImg_add").attr("class","tab-pane fade");
+        $("#img_update").attr("src","");
+        $("#update_text").text("--");
+        $("#userImg").attr("class","tab-pane" );
+        $("#li1_add").attr("class","active col-md-4");
+        $("#li2_add").attr("class","col-md-4");
+        $("#li1_update").attr("class","active col-md-4");
+        $("#li2_update").attr("class","col-md-4");
     }
 
     //删除数据
@@ -546,8 +558,8 @@
                 </h4>
             </div>
             <ul class="nav nav-pills">
-                <li role="presentation" class="active col-md-4"><a href="#basicMsg" rel="external nofollow" data-toggle="tab">基本信息</a></li>
-                <li role="presentation" class="col-md-4"><a href="#userImg" rel="external nofollow" data-toggle="tab">用户图片</a></li>
+                <li role="presentation" class="active col-md-4" id="li1_update"><a href="#basicMsg" rel="external nofollow" data-toggle="tab">基本信息</a></li>
+                <li role="presentation" class="col-md-4" id="li2_update"><a href="#userImg" rel="external nofollow" data-toggle="tab">用户图片</a></li>
             </ul>
             <div class="modal-body">
                 <div class="tab-content">
@@ -665,8 +677,8 @@
                 </h4>
             </div>
             <ul class="nav nav-pills">
-                <li role="presentation" class="active col-md-4"><a href="#basicMsg_add" rel="external nofollow" data-toggle="tab">基本信息</a></li>
-                <li role="presentation" class="col-md-4"><a href="#userImg_add" rel="external nofollow" data-toggle="tab">用户图片</a></li>
+                <li role="presentation" class="active col-md-4" id="li1_add"><a href="#basicMsg_add" rel="external nofollow" data-toggle="tab">基本信息</a></li>
+                <li role="presentation" class="col-md-4" id="li2_add"><a href="#userImg_add" rel="external nofollow" data-toggle="tab">用户图片</a></li>
             </ul>
             <form>
             <div class="modal-body">
