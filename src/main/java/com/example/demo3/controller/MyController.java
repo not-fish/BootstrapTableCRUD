@@ -1,9 +1,8 @@
 package com.example.demo3.controller;
 
 import com.example.demo3.common.ReturnMsgEnum;
-import com.example.demo3.dto.MyTableDTO;
+import com.example.demo3.entity.MyTableDTO;
 import com.example.demo3.service.MyService;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;

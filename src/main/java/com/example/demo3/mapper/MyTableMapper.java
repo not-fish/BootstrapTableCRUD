@@ -1,6 +1,6 @@
 package com.example.demo3.mapper;
 
-import com.example.demo3.dto.MyTableDTO;
+import com.example.demo3.entity.MyTableDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 

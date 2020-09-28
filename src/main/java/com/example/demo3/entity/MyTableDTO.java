@@ -1,4 +1,4 @@
-package com.example.demo3.dto;
+package com.example.demo3.entity;
 
 public class MyTableDTO {
     private String id;

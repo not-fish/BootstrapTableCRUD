@@ -1,6 +1,6 @@
 package com.example.demo3.service;
 
-import com.example.demo3.dto.MyTableDTO;
+import com.example.demo3.entity.MyTableDTO;
 import com.example.demo3.mapper.MyTableMapper;
 import org.springframework.stereotype.Service;
 
