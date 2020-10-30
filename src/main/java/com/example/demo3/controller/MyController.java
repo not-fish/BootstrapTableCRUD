@@ -1,8 +1,11 @@
 package com.example.demo3.controller;
 
+import com.example.demo3.annotation.WebLog;
 import com.example.demo3.common.ReturnMsgEnum;
-import com.example.demo3.entity.MyTableDTO;
+import com.example.demo3.dao.MyTable;
 import com.example.demo3.service.MyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +24,12 @@ import java.util.Map;
 
 @Controller
 public class MyController implements WebMvcConfigurer{
+
+    private static final Logger logger = LoggerFactory.getLogger(MyController.class);
+
     @Resource
     MyService myService;
+
 
     //解决跨域问题
     @Override
@@ -50,10 +57,11 @@ public class MyController implements WebMvcConfigurer{
         return "UserTablePlus1";
     }
 
+
     @CrossOrigin
     @RequestMapping("/table/all")
     @ResponseBody
-    public List<MyTableDTO> tableFindAll(){
+    public List<MyTable> tableFindAll(){
         return myService.TableFindAll();
     }
 
@@ -70,7 +78,7 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/edit")
-    public String tableEdit1(@RequestBody MyTableDTO myTableDTO){
+    public String tableEdit1(@RequestBody MyTable myTableDTO){
         System.out.println(myTableDTO.toString());
         myService.TableEdit(myTableDTO);
         return "SUCCESS";
@@ -79,7 +87,7 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/delete")
-    public String tableDelete(@RequestBody MyTableDTO myTableDTO){
+    public String tableDelete(@RequestBody MyTable myTableDTO){
         myService.TableDelete(myTableDTO);
         return "SUCCESS";
     }
@@ -87,10 +95,10 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/add")
-    public Map<String, String> tableAdd(@RequestBody MyTableDTO myTableDTO){
+    public Map<String, String> tableAdd(@RequestBody MyTable myTableDTO){
         Map<String, String> ret = new HashMap<String, String>();
         System.out.println("controller:"+myTableDTO.getId());
-        MyTableDTO my = myService.TableFindById(myTableDTO.getId());
+        MyTable my = myService.TableFindById(myTableDTO.getId());
         if(my != null){
             ret.put("returnCode", ReturnMsgEnum.FAIL_DATA_EXIST.getValue());
             ret.put("returnMsg", ReturnMsgEnum.FAIL_DATA_EXIST.getName());
@@ -103,12 +111,13 @@ public class MyController implements WebMvcConfigurer{
         return ret;
     }
 
+    @WebLog
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/query")
-    public List<MyTableDTO> tableQuery(@RequestBody MyTableDTO myTableDTO){
-        System.out.println("/table/query:"+myTableDTO.getStatus());
-        List<MyTableDTO> list =  myService.TableQuery(myTableDTO);
+    public List<MyTable> tableQuery(@RequestBody MyTable myTableDTO){
+//        System.out.println("/table/query:"+myTableDTO.getStatus());
+        List<MyTable> list =  myService.TableQuery(myTableDTO);
         return list;
     }
 
@@ -305,7 +314,6 @@ public class MyController implements WebMvcConfigurer{
 
         return ret;
     }
-
 
 }
 

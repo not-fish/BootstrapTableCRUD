@@ -1,6 +1,6 @@
-package com.example.demo3.entity;
+package com.example.demo3.dao;
 
-public class MyTableDTO {
+public class MyTable {
     private String id;
     private String name;
     private String phone;
