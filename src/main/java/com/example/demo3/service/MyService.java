@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.util.List;
 
+/**
+ * @author Peko.Lai
+ */
 @Service
 public class MyService {
     @Resource

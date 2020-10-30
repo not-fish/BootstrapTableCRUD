@@ -1,5 +1,8 @@
 package com.example.demo3.dao;
 
+/**
+ * @author Peko.Lai
+ */
 public class MyTable {
     private String id;
     private String name;

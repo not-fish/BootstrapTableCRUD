@@ -14,6 +14,10 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
+/**
+ * @author Peko.Lai
+ * Controller层的AOP
+ */
 @Aspect
 @Component
 public class MyControllerAOP {

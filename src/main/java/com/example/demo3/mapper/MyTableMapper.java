@@ -6,6 +6,9 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+/**
+ * @author Peko.Lai
+ */
 @Mapper
 public interface MyTableMapper {
     MyTable getTableById(@Param("id") String id);

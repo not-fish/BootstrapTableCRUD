@@ -22,6 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Peko.Lai
+ */
 @Controller
 public class MyController implements WebMvcConfigurer{
 
@@ -42,14 +45,14 @@ public class MyController implements WebMvcConfigurer{
         return "uploadFile";
     }
 
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @RequestMapping("/")
     public String function0(){
         return "redirect:/table";
-    }
-
-    @RequestMapping("/modal")
-    public String function011(){
-        return "modal";
     }
 
     @RequestMapping(value = "/table")
