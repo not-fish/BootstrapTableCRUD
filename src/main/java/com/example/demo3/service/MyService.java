@@ -1,7 +1,7 @@
 package com.example.demo3.service;
 
-import com.example.demo3.dao.MyTable;
-import com.example.demo3.mapper.MyTableMapper;
+import com.example.demo3.entity.MyTable;
+import com.example.demo3.dao.MyTableMapper;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

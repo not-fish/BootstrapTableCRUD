@@ -1,4 +1,4 @@
-package com.example.demo3.dao;
+package com.example.demo3.entity;
 
 /**
  * @author Peko.Lai
@@ -9,14 +9,14 @@ public class MyTable {
     private String phone;
     private String date;
     private String status;
-    private String user_img;
+    private String userImg;
 
     public String getUser_img() {
-        return user_img;
+        return userImg;
     }
 
     public void setUser_img(String user_img) {
-        this.user_img = user_img;
+        this.userImg = user_img;
     }
 
     public String getStatus() {
@@ -59,7 +59,7 @@ public class MyTable {
                 ", phone='" + phone + '\'' +
                 ", date='" + date + '\'' +
                 ", status='" + status + '\'' +
-                ", user_img='" + user_img + '\'' +
+                ", user_img='" + userImg + '\'' +
                 '}';
     }
 

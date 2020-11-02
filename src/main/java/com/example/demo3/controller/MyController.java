@@ -2,7 +2,7 @@ package com.example.demo3.controller;
 
 import com.example.demo3.annotation.WebLog;
 import com.example.demo3.common.ReturnMsgEnum;
-import com.example.demo3.dao.MyTable;
+import com.example.demo3.entity.MyTable;
 import com.example.demo3.service.MyService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
