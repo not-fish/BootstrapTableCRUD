@@ -1,0 +1,27 @@
+server:
+  port: 8083
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bootstrap_table?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: admin
+    driver-class-name: com.mysql.jdbc.Driver
+
+
+  mvc:
+    view.suffix: .html
+    static-path-pattern: /**
+
+  resources:
+    static-locations: classpath:/templates/,classpath:/static/
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 100MB
+
+mybatis:
+  type-aliases-package: com.xilo.shiro.entity
+  mapper-locations: classpath:com/xilo/shiro/dao/*.xml
+  config-location: classpath:mybatis-config.xml

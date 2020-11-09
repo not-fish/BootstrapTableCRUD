@@ -223,11 +223,10 @@
         var rowItem = rows[0];
             $('#myModalUpdate').modal();
 
-            console.log(rowItem.id + rowItem.name + rowItem.phone);
-            $('#id_update').attr("value",rowItem.id);
-            $('#name_update').attr("value",rowItem.name);
-            $('#phone_update').attr("value",rowItem.phone);
-            var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.user_img;
+            $('#id_update').attr("value",rowItem.userId);
+            $('#name_update').attr("value",rowItem.userName);
+            $('#phone_update').attr("value",rowItem.userPhone);
+            var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.userImg;
             $('#img_update_show').attr("src",filePath);
             console.log(filePath)
 
@@ -236,10 +235,10 @@
     //修改提交的信息
     function updateMsgAjax() {
         var data = {};
-        data["id"] = $('#id_update').val();
-        data["name"] = $('#name_update').val();
-        data["phone"] = $('#phone_update').val();
-        data["user_img"] = $('#img_text_update').val();
+        data["userId"] = $('#id_update').val();
+        data["userName"] = $('#name_update').val();
+        data["userPhone"] = $('#phone_update').val();
+        data["userImg"] = $('#img_text_update').val();
         $.ajax({
             type: "POST",
             url:"http://localhost:8083/table/edit",//后台接口
@@ -297,10 +296,9 @@
         }
         var rowItem = rows[0];
             $('#myModalDelete').modal();
-            console.log(rowItem.id + rowItem.name + rowItem.phone);
-            $('#id_del').attr("value",rowItem.id);
-            $('#name_del').attr("value",rowItem.name);
-            $('#phone_del').attr("value",rowItem.phone);
+            $('#id_del').attr("value",rowItem.userId);
+            $('#name_del').attr("value",rowItem.userName);
+            $('#phone_del').attr("value",rowItem.userPhone);
 
 
     }
@@ -308,7 +306,7 @@
     //执行删除数据
     function deleteMsgAjax() {
         var data = {};
-        data["id"] =  $('#id_del').val();
+        data["userId"] =  $('#id_del').val();
 
         $.ajax({
             type: "POST",
@@ -348,15 +346,32 @@
         var name = $('#name_add').val();
         var phone = $('#phone_add').val();
         var img = $('#img_add').val();
+        var password = $('#password_add').val();
+        var arr = [];
+        $("input[type=reset]").trigger("click");
+        $('input[name=identify]').each(function () {
+            arr.push($(this).val())
+        });
+        var str = null;
+        console.log("arr = "+arr[0]+' '+arr[1]);
+            for(var i=0;i<arr.length;i++){
+                str += 'id=null,'
+                str += 'roleName='+arr[i]+',';
+            }
+
+
+        console.log("str = "+str);
+
 
         if(id === ''|| name === ''|| phone === ''){
             alert("请填完整信息！");
         }else{
             var data = {};
-            data["id"] =  id;
-            data["name"] =  name;
-            data["phone"] =  phone;
-            data["user_img"] =  img;
+            data["userId"] =  id;
+            data["userName"] =  name;
+            data["userPhone"] =  phone;
+            data["userImg"] =  img;
+            data["userPassword"] =  password;
             $.ajax({
                 type: "POST",
                 url:"http://localhost:8083/table/add",//后台接口
@@ -401,9 +416,10 @@
             $('#teacher_table').bootstrapTable('refreshOptions',{url:"http://localhost:8083/table/all"});
         }else {
             var data = {};
-            data["id"] =  id;
-            data["name"] =  name;
-            data["phone"] =  phone;
+            data["userId"] =  id;
+            data["userName"] =  name;
+            data["userPhone"] =  phone;
+            console.log('查询：'+id+' '+name+' '+phone);
 
             $.ajax({
                 type: "POST",
@@ -440,13 +456,46 @@
         var rowItem = rows[0];
         $('#myModalRead').modal();
 
-        console.log(rowItem.id + rowItem.name + rowItem.phone);
-        $('#id_read').attr("value",rowItem.id);
-        $('#name_read').attr("value",rowItem.name);
-        $('#phone_read').attr("value",rowItem.phone);
-        var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.user_img;
+        $('#id_read').attr("value",rowItem.userId);
+        $('#name_read').attr("value",rowItem.userName);
+        $('#phone_read').attr("value",rowItem.userPhone);
+        var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.userImg;
         $('#img_read_show').attr("src",filePath);
         console.log(filePath)
+    }
+
+    function identifyFormatter(value, row, index) {
+        if(value==null || value===''){
+            return '';
+        }
+
+        //将对象转为Json
+        var temp = JSON.stringify(value);
+        //将Json转为字符数组
+        var obj = eval(temp);
+        var role;
+        var str = '';
+        for(var i=0;i<obj.length;i++){
+            role = obj[i].roleName;
+            console.log('role='+role);
+            if(role==='admin'){
+                str+='<span class="label label-info">'+role+'</span>'+' ';
+            }else if(role==='user'){
+                str+='<span class="label label-success">'+role+'</span>'+' ';
+            }
+
+        }
+
+        console.log(obj.length);
+        console.log('value = '+temp);
+        console.log(str);
+        return str;
+    }
+
+    function imageFormatter(value) {
+        var imgName = value;
+        console.log('imgName = '+imgName);
+        return '<img src="http://localhost:8083/downloadPhoto/'+imgName +'"'+ 'alt="" style="weight:30px;height:30px">';
     }
 
 
@@ -509,10 +558,10 @@
         </div>
         <div class="panel-body">
             <div id="toolbar" class="btn-group">
-                <button id="btn_read" type="button" class="btn btn-info " data-toggle="modal" onclick="readMsg();">
+                <button id="btn_read" type="button" class="btn btn-success " data-toggle="modal" onclick="readMsg();">
                     <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>查看
                 </button>
-                <button id="btn_add" type="button" class="btn btn-success " data-toggle="modal" onclick="addMsg();">
+                <button id="btn_add" type="button" class="btn btn-info " data-toggle="modal" onclick="addMsg();">
                     <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
                 </button>
                 <button id="btn_edit" type="button" class="btn btn-warning " data-toggle="modal" onclick="updateMsg();">
@@ -534,13 +583,13 @@
                    data-show-columns="true"
                    data-page-size="10">
                 <thead>
-                <tr>
-                    <th data-field="state" data-radio="true"></th>
-                    <th data-field="id">用户ID</th>
-                    <th data-field="name">名字</th>
-                    <th data-field="phone">电话</th>
-                    <th data-field="user_img">图片名称</th>
-                </tr>
+                    <tr>
+                        <th data-field="state" data-radio="true"></th>
+                        <th data-field="roles" data-formatter="identifyFormatter"  style="width: 100px">身份</th>
+                        <th data-field="userId">用户ID</th>
+                        <th data-field="userName">名字</th>
+                        <th data-field="userPhone">电话</th>
+                        <th data-field="userImg" data-formatter="imageFormatter">头像</th>
                 </thead>
             </table>
         </div>
@@ -692,6 +741,12 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
+                                <label for="id_add">用户密码</label>
+                                <input type="text" id="password_add" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
                                 <label for="name_add">用户姓名</label>
                                 <input type="text" id="name_add" class="form-control">
                             </div>
@@ -702,6 +757,18 @@
                                 <input type="text" id="phone_add" class="form-control">
                             </div>
                         </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="box">权限</label>
+                                <div id="box" style="height:35px;width:47%;border: 1px #cbc9c9 solid;border-radius:4px;">
+                                    &nbsp;
+                                    <input type="checkbox" name="identify" id="admin" value="admin" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-info" style="font-size: 16px">管理者</span>
+                                    &nbsp;
+                                    <input type="checkbox" name="identify" id="user" value="user" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-success" style="font-size: 16px">普通用户</span>
+                                </div>
+                            </div>
+                        </div>
+
                         <input type="text" id="img_add" class="hide">
                     </div>
                     <div class="tab-pane fade" id="userImg_add">

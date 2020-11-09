@@ -2,8 +2,8 @@ package com.example.demo3.controller;
 
 import com.example.demo3.annotation.WebLog;
 import com.example.demo3.common.ReturnMsgEnum;
-import com.example.demo3.entity.MyTable;
-import com.example.demo3.service.MyService;
+import com.example.demo3.entity.User;
+import com.example.demo3.service.Impl.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -31,7 +31,7 @@ public class MyController implements WebMvcConfigurer{
     private static final Logger logger = LoggerFactory.getLogger(MyController.class);
 
     @Resource
-    MyService myService;
+    UserServiceImpl userService;
 
 
     //解决跨域问题
@@ -64,8 +64,10 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @RequestMapping("/table/all")
     @ResponseBody
-    public List<MyTable> tableFindAll(){
-        return myService.TableFindAll();
+    public List<User> tableFindAll(){
+        List<User> users = userService.tableFindAll();
+        System.out.println(users);
+        return users;
     }
 
     @RequestMapping(value = "/table/editA")
@@ -81,34 +83,34 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/edit")
-    public String tableEdit1(@RequestBody MyTable myTableDTO){
-        System.out.println(myTableDTO.toString());
-        myService.TableEdit(myTableDTO);
+    public String tableEdit1(@RequestBody User user){
+        System.out.println(user.toString());
+        userService.tableEdit(user);
         return "SUCCESS";
     }
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/delete")
-    public String tableDelete(@RequestBody MyTable myTableDTO){
-        myService.TableDelete(myTableDTO);
+    public String tableDelete(@RequestBody User user){
+        userService.tableDelete(user);
         return "SUCCESS";
     }
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/add")
-    public Map<String, String> tableAdd(@RequestBody MyTable myTableDTO){
+    public Map<String, String> tableAdd(@RequestBody User user){
         Map<String, String> ret = new HashMap<String, String>();
-        System.out.println("controller:"+myTableDTO.getId());
-        MyTable my = myService.TableFindById(myTableDTO.getId());
-        if(my != null){
+        System.out.println("controller:"+ user.getUserId());
+        User userCO = userService.tableFindByUserId(user.getUserId());
+        if(userCO != null){
             ret.put("returnCode", ReturnMsgEnum.FAIL_DATA_EXIST.getValue());
             ret.put("returnMsg", ReturnMsgEnum.FAIL_DATA_EXIST.getName());
-            System.out.println("my is null");
+            System.out.println("userCO is null");
             return ret;
         }
-        myService.TableAdd(myTableDTO);
+        userService.tableAdd(user);
         ret.put("returnCode", ReturnMsgEnum.ADD_DATA_SUCCESS.getValue());
         ret.put("returnMsg", ReturnMsgEnum.ADD_DATA_SUCCESS.getName());
         return ret;
@@ -118,9 +120,9 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/query")
-    public List<MyTable> tableQuery(@RequestBody MyTable myTableDTO){
+    public List<User> tableQuery(@RequestBody User user){
 //        System.out.println("/table/query:"+myTableDTO.getStatus());
-        List<MyTable> list =  myService.TableQuery(myTableDTO);
+        List<User> list =  userService.tableQuery(user);
         return list;
     }
 
