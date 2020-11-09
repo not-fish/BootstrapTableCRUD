@@ -117,7 +117,7 @@
             formData.append('photo', document.getElementById('documentFile').files[0]);
             $.ajax({
                 type: "POST",
-                url:"http://10.3.2.29:8080/uploadFile",//后台接口
+                url:"http://localhost:8080/uploadFile",//后台接口
                 dataType: "json",
                 data:formData,
                 fileElementId:"file",  // 文件的id
@@ -142,7 +142,7 @@
     }
 
     function downloadFile() {
-        window.location.href="http://10.3.2.29:8080/downloadPhoto/1600761267022.xlsx";
+        window.location.href="http://localhost:8080/downloadPhoto/1600761267022.xlsx";
     }
 
 </script>

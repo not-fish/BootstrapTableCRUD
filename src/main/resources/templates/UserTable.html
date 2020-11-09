@@ -58,7 +58,7 @@
         data["phone"] = $('#phone').val();
         $.ajax({
             type: "POST",
-            url:"http://10.3.2.29:8080/table/edit",//后台接口
+            url:"http://localhost:8080/table/edit",//后台接口
             dataType: "json",
             contentType:"application/json",
             data:JSON.stringify(data),
@@ -111,7 +111,7 @@
 
         $.ajax({
             type: "POST",
-            url:"http://10.3.2.29:8080/table/delete",//后台接口
+            url:"http://localhost:8080/table/delete",//后台接口
             dataType: "json",
             contentType:"application/json",
             data:JSON.stringify(data),
@@ -154,7 +154,7 @@
             data["phone"] =  phone;
             $.ajax({
                 type: "POST",
-                url:"http://10.3.2.29:8080/table/add",//后台接口
+                url:"http://localhost:8080/table/add",//后台接口
                 dataType: "json",
                 contentType:"application/json",
                 data:JSON.stringify(data),
@@ -189,7 +189,7 @@
 
         //如果什么也没有填，则查询到所有数据
         if(id === ''&& name === ''&& phone === ''){
-            $('#teacher_table').bootstrapTable('refreshOptions',{url:"http://10.3.2.29:8080/table/all"});
+            $('#teacher_table').bootstrapTable('refreshOptions',{url:"http://localhost:8080/table/all"});
         }else {
             var data = {};
             data["id"] =  id;
@@ -198,7 +198,7 @@
 
             $.ajax({
                 type: "POST",
-                url:"http://10.3.2.29:8080/table/query",//后台接口
+                url:"http://localhost:8080/table/query",//后台接口
                 dataType: "json",
                 contentType:"application/json",
                 data:JSON.stringify(data),
@@ -276,7 +276,7 @@
             </div>
             <table id="teacher_table" data-toggle="table"
                    data-method="post"
-                   data-url="http://10.3.2.29:8080/table/all"
+                   data-url="http://localhost:8080/table/all"
                    data-query-params="queryParams"
                    data-toolbar="#toolbar"
                    data-pagination="true"
