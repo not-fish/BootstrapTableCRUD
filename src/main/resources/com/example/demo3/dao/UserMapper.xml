@@ -8,7 +8,7 @@
         SELECT * FROM t_user WHERE user_id = #{userId}
     </select>
 
-    <resultMap id="UserMap" type="com.example.demo3.entity.User">
+    <resultMap id="UserMap" type="com.example.demo3.dto.UserRole">
         <id column="user_id" property="userId"/>
         <result column="user_name" property="userName"/>
         <result column="user_phone" property="userPhone"/>
@@ -65,13 +65,18 @@
             </trim>
     </insert>
 
-    <select id="queryTable" parameterType="com.example.demo3.entity.User" resultType="com.example.demo3.entity.User">
-            SELECT * FROM t_user
+    <select id="queryTable" parameterType="com.example.demo3.entity.User" resultMap="UserMap">
+            SELECT u.user_id,u.user_name,u.user_phone,u.user_img,r.role_name
+            FROM t_user u
+            LEFT JOIN t_user_role ur
+            ON u.user_id = ur.user_id
+            LEFT JOIN t_role r
+            ON ur.role_id = r.id
             WHERE
             <trim >
-                <if test="userId != null and userId != ''">user_id=</if>
-                <if test="userName != null and userName != ''">user_name=</if>
-                <if test="userPhone != null and userPhone != ''">user_phone=</if>
+                <if test="userId != null and userId != ''">u.user_id=</if>
+                <if test="userName != null and userName != ''">u.user_name=</if>
+                <if test="userPhone != null and userPhone != ''">u.user_phone=</if>
             </trim>
 
             <trim>
@@ -79,6 +84,23 @@
                 <if test="userName != null and userName != ''">#{userName}</if>
                 <if test="userPhone != null and userPhone != ''">#{userPhone}</if>
             </trim>
+    </select>
+
+    <insert id="updateRole">
+        INSERT INTO t_user_role
+        <trim prefix="(" suffix=')' suffixOverrides=",">
+            <if test="userId != null and userId != ''">user_id,</if>
+            <if test="roleId != null and roleId != ''">role_id,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null and userId != ''">#{userId},</if>
+            <if test="roleId != null and roleId != ''">#{roleId},</if>
+        </trim>
+    </insert>
+
+    <select id="findRoleByName" parameterType="String" resultType="String">
+        SELECT role_id FROM t_role
+        WHERE role_name = #{roleName}
     </select>
 
 </mapper>

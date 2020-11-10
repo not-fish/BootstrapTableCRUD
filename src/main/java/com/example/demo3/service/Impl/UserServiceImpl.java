@@ -1,5 +1,10 @@
 package com.example.demo3.service.Impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.example.demo3.dto.UserRole;
+import com.example.demo3.dto.UserUpadteRole;
 import com.example.demo3.entity.Role;
 import com.example.demo3.entity.User;
 import com.example.demo3.dao.UserMapper;
@@ -26,8 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> tableFindAll(){
-        List<User> users = myTableMapper.getAll();
+    public List<UserRole> tableFindAll(){
+        List<UserRole> users = myTableMapper.getAll();
         System.out.println(users);
         return users;
     }
@@ -75,22 +80,36 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> tableQuery(User user){
-        List<User> list = myTableMapper.queryTable(user);
+    public List<UserRole> tableQuery(User user){
+        List<UserRole> list = myTableMapper.queryTable(user);
         return list;
     }
 
     public static void main(String[] args) {
 
-        Role r1 = new Role(null,"admin");
-        Role r2 = new Role(null,"user");
-        List<Role> roles = new ArrayList<>();
-        roles.add(r1);
-        roles.add(r2);
-        System.out.println(roles.toString());
-        User user = new User();
-        user.setRoles(roles);
-        System.out.println(user);
+        String[] strs = {"a","b"};
+        System.out.println(strs[0]);
     }
 
+    @Override
+    public boolean tableEditRole(UserUpadteRole uur){
+        String userId = uur.getUserId();
+        String roleId = "";
+        String[] roles = uur.getRoleNames();
+        for (String role:roles) {
+            roleId = myTableMapper.findRoleByName(role);
+            int i = myTableMapper.updateRole(userId,roleId);
+            if(i==0){
+                System.out.println("授权失败");
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
+    public void tableDeleteRole(String userId){
+
+    }
 }

@@ -234,11 +234,22 @@
 
     //修改提交的信息
     function updateMsgAjax() {
+
+        var arr = [];
+        $("input[type=reset]").trigger("click");
+        $('input[name=identify]').each(function () {
+            arr.push($(this).val())
+        });
+
+        console.log("arr = "+arr);
+
         var data = {};
         data["userId"] = $('#id_update').val();
         data["userName"] = $('#name_update').val();
         data["userPhone"] = $('#phone_update').val();
         data["userImg"] = $('#img_text_update').val();
+        data["roleNames"] = arr;
+
         $.ajax({
             type: "POST",
             url:"http://localhost:8083/table/edit",//后台接口
@@ -347,21 +358,6 @@
         var phone = $('#phone_add').val();
         var img = $('#img_add').val();
         var password = $('#password_add').val();
-        var arr = [];
-        $("input[type=reset]").trigger("click");
-        $('input[name=identify]').each(function () {
-            arr.push($(this).val())
-        });
-        var str = null;
-        console.log("arr = "+arr[0]+' '+arr[1]);
-            for(var i=0;i<arr.length;i++){
-                str += 'id=null,'
-                str += 'roleName='+arr[i]+',';
-            }
-
-
-        console.log("str = "+str);
-
 
         if(id === ''|| name === ''|| phone === ''){
             alert("请填完整信息！");
@@ -473,7 +469,7 @@
         var temp = JSON.stringify(value);
         //将Json转为字符数组
         var obj = eval(temp);
-        var role;
+        var role='';
         var str = '';
         for(var i=0;i<obj.length;i++){
             role = obj[i].roleName;
@@ -498,14 +494,13 @@
         return '<img src="http://localhost:8083/downloadPhoto/'+imgName +'"'+ 'alt="" style="weight:30px;height:30px">';
     }
 
-
 </script>
 
 <body>
 <div class="col-md-offset-2 col-md-10">
 
     <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-heading" style="background: #bce4ef">
             <h3 class="panel-title text-center">用户信息查询</h3>
         </div>
         <form class="form-horizontal">
@@ -553,7 +548,7 @@
     </div>
 
     <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-heading"  style="background: #bce4ef">
             <h3 class="panel-title text-center">用户信息</h3>
         </div>
         <div class="panel-body">
@@ -629,6 +624,18 @@
                             <div class="form-group">
                                 <label for="phone_update">用户号码</label>
                                 <input type="text" id="phone_update" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label for="box">权限</label>
+                                <div id="box" style="height:37px;width:47%;border: 1px #cbc9c9 solid;border-radius:4px;">
+                                    &nbsp;
+                                    <input type="checkbox" name="identify" id="admin" value="admin" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-info" style="font-size: 16px">管理者</span>
+                                    &nbsp;
+                                    <input type="checkbox" name="identify" id="user" value="user" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-success" style="font-size: 16px">普通用户</span>
+                                </div>
+
                             </div>
                         </div>
                         <input type="text" id="img_text_update" class="hide">
@@ -757,18 +764,6 @@
                                 <input type="text" id="phone_add" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-8">
-                            <div class="form-group">
-                                <label for="box">权限</label>
-                                <div id="box" style="height:35px;width:47%;border: 1px #cbc9c9 solid;border-radius:4px;">
-                                    &nbsp;
-                                    <input type="checkbox" name="identify" id="admin" value="admin" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-info" style="font-size: 16px">管理者</span>
-                                    &nbsp;
-                                    <input type="checkbox" name="identify" id="user" value="user" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-success" style="font-size: 16px">普通用户</span>
-                                </div>
-                            </div>
-                        </div>
-
                         <input type="text" id="img_add" class="hide">
                     </div>
                     <div class="tab-pane fade" id="userImg_add">

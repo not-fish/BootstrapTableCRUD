@@ -2,10 +2,13 @@ package com.example.demo3.controller;
 
 import com.example.demo3.annotation.WebLog;
 import com.example.demo3.common.ReturnMsgEnum;
+import com.example.demo3.dto.UserRole;
+import com.example.demo3.dto.UserUpadteRole;
 import com.example.demo3.entity.User;
 import com.example.demo3.service.Impl.UserServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.*;
@@ -64,15 +67,15 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @RequestMapping("/table/all")
     @ResponseBody
-    public List<User> tableFindAll(){
-        List<User> users = userService.tableFindAll();
+    public List<UserRole> tableFindAll(){
+        List<UserRole> users = userService.tableFindAll();
         System.out.println(users);
         return users;
     }
 
     @RequestMapping(value = "/table/editA")
     @ResponseBody
-    public String tableEdit(@RequestBody Map<String, String> params){
+    public String tableEdit1(@RequestBody Map<String, String> params){
         String id = params.get("id");
         String name = params.get("name");
         String phone = params.get("phone");
@@ -83,17 +86,23 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/edit")
-    public String tableEdit1(@RequestBody User user){
+    public String tableEdit(@RequestBody UserUpadteRole uur){
+        User user = new User();
+        BeanUtils.copyProperties(uur,user);
         System.out.println(user.toString());
+        System.out.println(uur.toString());
         userService.tableEdit(user);
+        userService.tableEditRole(uur);
         return "SUCCESS";
     }
+
 
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/delete")
     public String tableDelete(@RequestBody User user){
         userService.tableDelete(user);
+        userService.tableDeleteRole(user);
         return "SUCCESS";
     }
 
@@ -120,9 +129,9 @@ public class MyController implements WebMvcConfigurer{
     @CrossOrigin
     @ResponseBody
     @RequestMapping(value = "/table/query")
-    public List<User> tableQuery(@RequestBody User user){
+    public List<UserRole> tableQuery(@RequestBody User user){
 //        System.out.println("/table/query:"+myTableDTO.getStatus());
-        List<User> list =  userService.tableQuery(user);
+        List<UserRole> list =  userService.tableQuery(user);
         return list;
     }
 
