@@ -329,5 +329,13 @@ public class MyController implements WebMvcConfigurer{
         return ret;
     }
 
+    public static void main(String[] args) {
+        String url = "http://172.31.205.173:16808/file/merc/10000/5543a2f15a5ebf3a021def8d9df97230";
+        int index = url.lastIndexOf("/");
+        System.out.println(index);
+        String ss = url.substring(index+1);
+        System.out.println(ss);
+    }
+
 }
 
