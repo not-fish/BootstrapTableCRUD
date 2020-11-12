@@ -103,4 +103,9 @@
         WHERE role_name = #{roleName}
     </select>
 
+    <delete id="deleteRoleByUserId" parameterType="String">
+        DELETE FROM t_user_role
+        WHERE user_id = #{userId}
+    </delete>
+
 </mapper>

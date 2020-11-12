@@ -213,7 +213,7 @@
         }
     }
 
-    //修改信息
+    //修改信息模态框
     function updateMsg() {
         var rows = $("#teacher_table").bootstrapTable('getSelections');
         if (rows.length < 1) {
@@ -221,27 +221,50 @@
             return false;
         }
         var rowItem = rows[0];
-            $('#myModalUpdate').modal();
+        $('#myModalUpdate').modal();
 
-            $('#id_update').attr("value",rowItem.userId);
-            $('#name_update').attr("value",rowItem.userName);
-            $('#phone_update').attr("value",rowItem.userPhone);
-            var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.userImg;
-            $('#img_update_show').attr("src",filePath);
-            console.log(filePath)
+        $('#id_update').attr("value",rowItem.userId);
+        $('#name_update').attr("value",rowItem.userName);
+        $('#phone_update').attr("value",rowItem.userPhone);
+        var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.userImg;
+        $('#img_update_show').attr("src",filePath);
+
+        //身份栏显示
+        //将对象转为Json
+        var temp = JSON.stringify(rowItem.roles);
+        console.log('修改信息栏的身份：'+temp);
+        //将Json转为字符数组
+        var obj = eval(temp);
+        var role='';
+        var str = '';
+        for(var i=0;i<obj.length;i++){
+            role = obj[i].roleName;
+            console.log('role='+role);
+            if(role==='admin'){
+                $("#admin_box").prop("checked",true);
+            }else if(role==='user'){
+                $("#user_box").prop("checked",true);
+            }
+
+        }
+
+        console.log(filePath)
 
     }
 
     //修改提交的信息
     function updateMsgAjax() {
 
+        //获取复选框里的被选中的内容
         var arr = [];
-        $("input[type=reset]").trigger("click");
         $('input[name=identify]').each(function () {
-            arr.push($(this).val())
+            console.log($(this).prop('checked'));
+            if($(this).prop('checked')===true){
+                arr.push($(this).val())
+            }
         });
 
-        console.log("arr = "+arr);
+        console.log("修改信息 arr = "+arr);
 
         var data = {};
         data["userId"] = $('#id_update').val();
@@ -296,9 +319,11 @@
         $("#li2_add").attr("class","col-md-4");
         $("#li1_update").attr("class","active col-md-4");
         $("#li2_update").attr("class","col-md-4");
+        $("#admin_box").prop("checked",false);
+        $("#user_box").prop("checked",false);
     }
 
-    //删除数据
+    //删除数据模态框
     function deleteMsg() {
         var rows = $("#teacher_table").bootstrapTable('getSelections');
         if (rows.length < 1) {
@@ -345,7 +370,7 @@
         });
     }
 
-    //添加数据
+    //添加数据模态框
     function addMsg(){
         $('#myModalAdd').modal('show');
     }
@@ -442,7 +467,7 @@
 
     }
 
-    //查看数据
+    //查看数据模态框
     function readMsg(){
         var rows = $("#teacher_table").bootstrapTable('getSelections');
         if (rows.length < 1) {
@@ -458,6 +483,26 @@
         var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.userImg;
         $('#img_read_show').attr("src",filePath);
         console.log(filePath)
+
+        //身份栏显示
+        //将对象转为Json
+        var temp = JSON.stringify(rowItem.roles);
+        console.log('查看信息栏的身份：'+temp);
+        //将Json转为字符数组
+        var obj = eval(temp);
+        var role='';
+        var str = '';
+        $("#iden_adm_read").hide();
+        $("#iden_user_read").hide();
+        for(var i=0;i<obj.length;i++){
+            role = obj[i].roleName;
+            console.log('role='+role);
+            if(role==='admin'){
+                $("#iden_adm_read").show();
+            }else if(role==='user'){
+                $("#iden_user_read").show();
+            }
+        }
     }
 
     function identifyFormatter(value, row, index) {
@@ -605,6 +650,7 @@
                 <li role="presentation" class="active col-md-4" id="li1_update"><a href="#basicMsg" rel="external nofollow" data-toggle="tab">基本信息</a></li>
                 <li role="presentation" class="col-md-4" id="li2_update"><a href="#userImg" rel="external nofollow" data-toggle="tab">用户图片</a></li>
             </ul>
+            <form>
             <div class="modal-body">
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="basicMsg">
@@ -631,9 +677,9 @@
                                 <label for="box">权限</label>
                                 <div id="box" style="height:37px;width:47%;border: 1px #cbc9c9 solid;border-radius:4px;">
                                     &nbsp;
-                                    <input type="checkbox" name="identify" id="admin" value="admin" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-info" style="font-size: 16px">管理者</span>
+                                    <input type="checkbox" name="identify" id="admin_box" value="admin" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-info" style="font-size: 16px">管理者</span>
                                     &nbsp;
-                                    <input type="checkbox" name="identify" id="user" value="user" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-success" style="font-size: 16px">普通用户</span>
+                                    <input type="checkbox" name="identify" id="user_box" value="user" style="height:12px;width:12px;margin-top: 10px"> <span class="label label-success" style="font-size: 16px">普通用户</span>
                                 </div>
 
                             </div>
@@ -670,6 +716,8 @@
                     </div>
                 </div>
             </div>
+                <input type="reset" name="reset" style="display: none;" />
+            </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭
                 </button>
@@ -836,6 +884,19 @@
                                 <div class="form-group">
                                     <label for="phone_read">用户号码</label>
                                     <input type="text" id="phone_read" class="form-control" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <label for="box1">权限</label>
+                                    <div id="box1" style="height:37px;width:47%;border: 1px #cbc9c9 solid;border-radius:4px;">
+                                        <div style="margin-top: 8px">
+                                        &nbsp;
+                                        <span id = "iden_adm_read" class="label label-info" style="font-size: 16px">管理者</span>
+                                        &nbsp;
+                                        <span id = "iden_user_read" class="label label-success" style="font-size: 16px">普通用户</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

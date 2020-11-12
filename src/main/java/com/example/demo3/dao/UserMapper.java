@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @author Peko.Lai
+ * @author Peko
  */
 @Mapper
 public interface UserMapper {
@@ -20,4 +20,5 @@ public interface UserMapper {
     List<UserRole> queryTable(User userDTO);
     int updateRole(@Param("userId")String userId,@Param("roleId")String roleId);
     String findRoleByName(@Param("roleName")String roleName);
+    void deleteRoleByUserId(@Param("userId")String userId);
 }

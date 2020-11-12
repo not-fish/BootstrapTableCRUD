@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Peko.Lai
+ * @author Peko
  */
 @Controller
 public class MyController implements WebMvcConfigurer{
@@ -102,7 +102,7 @@ public class MyController implements WebMvcConfigurer{
     @RequestMapping(value = "/table/delete")
     public String tableDelete(@RequestBody User user){
         userService.tableDelete(user);
-        userService.tableDeleteRole(user);
+        userService.tableDeleteRole(user.getUserId());
         return "SUCCESS";
     }
 

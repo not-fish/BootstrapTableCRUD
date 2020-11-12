@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Peko.Lai
+ * @author Peko
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -93,7 +93,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean tableEditRole(UserUpadteRole uur){
+
         String userId = uur.getUserId();
+
+        //在授权之前要把已有的权限清除
+        myTableMapper.deleteRoleByUserId(userId);
+
         String roleId = "";
         String[] roles = uur.getRoleNames();
         for (String role:roles) {
@@ -110,6 +115,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void tableDeleteRole(String userId){
-
+        myTableMapper.deleteRoleByUserId(userId);
     }
 }
