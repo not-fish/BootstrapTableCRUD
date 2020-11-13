@@ -11,7 +11,7 @@
     <link href="/css/bootstrap.css" rel="stylesheet">
     <!-- 引入bootstrap-table样式 -->
     <link href="/css/bootstrap-table.css" rel="stylesheet">
-    <!-- 菜单栏的css-->
+    <!-- 菜单栏的css，注意：这个可能会覆盖掉一些标签字体的颜色-->
     <link rel="stylesheet" href="/css/style.css">
     <!-- jquery -->
     <script src="/js/jquery.min.js"></script>
@@ -26,11 +26,12 @@
 
     var btnUploadText = '选择图片';
 
-    //*************导航栏部分************
+    //*************左侧菜单栏部分************
     $(document).ready(function () {
         var trigger = $('.hamburger'),
             overlay = $('.overlay'),
             isClosed = false;
+
 
         trigger.click(function () {
             hamburger_cross();
@@ -55,8 +56,7 @@
             $('#wrapper').toggleClass('toggled');
         });
     });
-    //*************导航栏部分************
-
+    //*************左侧菜单栏部分************
 
     $(document).ready(function () {
         $("#selectImg").text(btnUploadText)
@@ -608,7 +608,7 @@
 
 
 
-<div class="col-md-offset-2 col-md-10">
+<div class="col-md-offset-1 col-md-10">
     <div class="jumbotron" style="height: 163px; margin-top: -19px;background-image: url(/img/bilibili.webp)">
     </div>
 </div>
@@ -678,7 +678,7 @@
 </div>
 <!-- /#wrapper -->
 
-<div class="col-md-offset-2 col-md-10" style="margin-top: -30px">
+<div class="col-md-offset-1 col-md-10" style="margin-top: -30px">
 
     <div class="panel panel-default">
         <div class="panel-heading" style="background: #bce4ef">
@@ -783,8 +783,8 @@
                 </h4>
             </div>
             <ul class="nav nav-pills">
-                <li role="presentation" class="active col-md-4" id="li1_update"><a href="#basicMsg" rel="external nofollow" data-toggle="tab">基本信息</a></li>
-                <li role="presentation" class="col-md-4" id="li2_update"><a href="#userImg" rel="external nofollow" data-toggle="tab">用户图片</a></li>
+                <li role="presentation" class="active col-md-4" id="li1_update" style="background: #67bbff"><a href="#basicMsg" rel="external nofollow" data-toggle="tab">基本信息</a></li>
+                <li role="presentation" class="col-md-4" id="li2_update" style="background: #67bbff"><a href="#userImg" rel="external nofollow" data-toggle="tab">用户图片</a></li>
             </ul>
             <form>
             <div class="modal-body">
@@ -895,7 +895,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer" >
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消
                 </button>
                 <button type="button" class="btn btn-primary" onclick="deleteMsgAjax()">
@@ -917,11 +917,12 @@
                 </h4>
             </div>
             <ul class="nav nav-pills">
-                <li role="presentation" class="active col-md-4" id="li1_add"><a href="#basicMsg_add" rel="external nofollow" data-toggle="tab">基本信息</a></li>
-                <li role="presentation" class="col-md-4" id="li2_add"><a href="#userImg_add" rel="external nofollow" data-toggle="tab">用户图片</a></li>
+                <li role="presentation" class="active col-md-4" id="li1_add" style="background: #67bbff"><a href="#basicMsg_add" rel="external nofollow" data-toggle="tab">基本信息</a></li>
+                <li role="presentation" class="col-md-4" id="li2_add" style="background: #67bbff"><a href="#userImg_add" rel="external nofollow" data-toggle="tab">用户图片</a></li>
             </ul>
-            <form>
+
             <div class="modal-body">
+                <form>
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="basicMsg_add">
                         <div class="col-md-4">
@@ -974,9 +975,10 @@
                         </div>
                     </div>
                 </div>
+                    <input type="reset" name="reset" style="display: none;" />
+                </form>
             </div>
-                <input type="reset" name="reset" style="display: none;" />
-            </form>
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消
                 </button>
@@ -998,8 +1000,8 @@
                 </h4>
             </div>
             <ul class="nav nav-pills">
-                <li role="presentation" class="active col-md-4"><a href="#basicMsg_read" rel="external nofollow" data-toggle="tab">基本信息</a></li>
-                <li role="presentation" class="col-md-4"><a href="#userImg_read" rel="external nofollow" data-toggle="tab">用户图片</a></li>
+                <li role="presentation" class="active col-md-4" style="background: #67bbff"><a href="#basicMsg_read" rel="external nofollow" data-toggle="tab">基本信息</a></li>
+                <li role="presentation" class="col-md-4" style="background: #67bbff"><a href="#userImg_read" rel="external nofollow" data-toggle="tab">用户图片</a></li>
             </ul>
                 <div class="modal-body">
                     <div class="tab-content">
