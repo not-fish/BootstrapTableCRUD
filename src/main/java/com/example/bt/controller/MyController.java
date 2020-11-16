@@ -208,7 +208,8 @@ public class MyController implements WebMvcConfigurer{
         String path = null;
         try {
             String serverPath= ResourceUtils.getURL("classpath:static").getPath().replace("%20"," ");
-            path=serverPath.substring(1);//从路径字符串中取出工程路径
+            //从路径字符串中取出工程路径
+            path=serverPath.substring(1);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
