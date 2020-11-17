@@ -35,6 +35,7 @@
             <button id="uploadButton" type="button" onclick="uploadFile();">上传</button>
         </div>
     </div>
+    <input id="downloadFileName" type="text" readonly="readonly">
     <div>
         <button type="button"  onclick="downloadFile()">点击下载</button>
     </div>
@@ -50,7 +51,7 @@
         });
         $("#documentFile").on("change", function (e) {
             var file = e.target.files[0]; //获取图片资源
-            var fileTypes = ["doc", "docx", "xls", "xlsx"];
+            var fileTypes = ["doc", "docx", "xls", "xlsx","txt"];
             var bTypeMatch = false
             for (var i = 0; i < fileTypes.length; i++) {
                 var start = file.name.lastIndexOf(".");
@@ -117,7 +118,7 @@
             formData.append('photo', document.getElementById('documentFile').files[0]);
             $.ajax({
                 type: "POST",
-                url:"http://localhost:8080/uploadFile",//后台接口
+                url:"http://localhost:8083/uploadFile",//后台接口
                 dataType: "json",
                 data:formData,
                 fileElementId:"file",  // 文件的id
@@ -129,6 +130,7 @@
                     console.log("返回码："+data.status+" code:"+data.code+" status:"+status+" xhr:"+xhr.status)
                     if(xhr.status === 200) {
                         alert("上传成功:"+xhr.status+" OK");
+                        $('#downloadFileName').attr("value",data.filename)
                     }
                 },
                 error: function (d,status,xhr) {
@@ -142,7 +144,10 @@
     }
 
     function downloadFile() {
-        window.location.href="http://localhost:8080/downloadPhoto/1600761267022.xlsx";
+        var fileName = $('#downloadFileName').val();
+        console.log("fileName = "+fileName)
+        var url = "http://localhost:8083/downloadPhoto/"+fileName;
+        window.location.href=url;
     }
 
 </script>

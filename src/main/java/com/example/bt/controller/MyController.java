@@ -224,7 +224,7 @@ public class MyController implements WebMvcConfigurer{
 
     @ResponseBody
     @RequestMapping(value = "/downloadPhoto/{fileN}")
-    public String downloadPhoto(@PathVariable String fileN,HttpServletRequest request,HttpServletResponse response) throws IOException {
+    public void downloadPhoto(@PathVariable String fileN,HttpServletRequest request,HttpServletResponse response) throws IOException {
         String fileName = fileN;
         if(fileName!=null){
             String filePath = "E:/imagesFile/" + fileName;
@@ -246,7 +246,6 @@ public class MyController implements WebMvcConfigurer{
                         os.write(buffer,0,i);
                         i=bis.read(buffer);
                     }
-                    return "download success";
                 }catch(Exception e){
                     e.printStackTrace();
                 }finally{
@@ -255,7 +254,6 @@ public class MyController implements WebMvcConfigurer{
                 }
             }
         }
-        return "failure";
     }
 
     @ResponseBody
@@ -311,7 +309,7 @@ public class MyController implements WebMvcConfigurer{
 
         //获取文件后缀
         String suffix = photo.getOriginalFilename().substring(photo.getOriginalFilename().lastIndexOf(".") + 1, photo.getOriginalFilename().length());
-        if (!"xlsx,xls,doc,docx".toUpperCase().contains(suffix.toUpperCase())) {
+        if (!"xlsx,xls,doc,docx,txt".toUpperCase().contains(suffix.toUpperCase())) {
             ret.put("type", "error");
             ret.put("msg", "请选择xlsx,xls,doc,docx格式的文件！");
             return ret;
