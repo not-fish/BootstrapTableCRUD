@@ -31,6 +31,14 @@ $(document).ready(function () {
     $('[data-toggle="offcanvas"]').click(function () {
         $('#wrapper').toggleClass('toggled');
     });
+
+    overlay.click(function () {
+        overlay.hide();
+        trigger.removeClass('is-open');
+        trigger.addClass('is-closed');
+        isClosed = false;
+        $('#wrapper').toggleClass('toggled');
+    })
 });
 //*************左侧菜单栏部分************
 
@@ -549,3 +557,21 @@ function imageFormatter(value) {
     console.log('imgName = '+imgName);
     return '<img src="http://localhost:8083/downloadPhoto/'+imgName +'"'+ 'alt="" style="weight:30px;height:30px">';
 }
+
+//菜单栏的链接跳转
+$(function () {
+    //首次进入显示主页
+    $('#principalPart').load('index.html');
+
+    $('#toUserTablePage').click(function () {
+        $('#principalPart').empty();
+        console.log("跳转至用户表");
+        $('#principalPart').load('UserTable.html');
+    });
+
+    $('#toHomePage').click(function () {
+        $('#principalPart').empty();
+        console.log("跳转至用户表");
+        $('#principalPart').load('index.html');
+    });
+});

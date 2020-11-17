@@ -125,6 +125,7 @@ public class MyController implements WebMvcConfigurer{
             return ret;
         }
         userService.tableAdd(user);
+        userService.tableEditRole(new UserUpadteRole());
         ret.put("returnCode", ReturnMsgEnum.ADD_DATA_SUCCESS.getValue());
         ret.put("returnMsg", ReturnMsgEnum.ADD_DATA_SUCCESS.getName());
         return ret;
