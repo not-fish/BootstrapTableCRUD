@@ -310,7 +310,7 @@ function updateMsgAjax() {
     });
 }
 
-//还原数据
+//还原数据（清除控件显示的旧数据）
 function initMsg() {
     $('#myModalUpdate').modal('hide');
     $('#myModalDelete').modal('hide');
