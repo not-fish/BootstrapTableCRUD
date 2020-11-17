@@ -125,7 +125,12 @@ public class MyController implements WebMvcConfigurer{
             return ret;
         }
         userService.tableAdd(user);
-        userService.tableEditRole(new UserUpadteRole());
+        //每个添加的用户身份都有 user 身份
+        UserUpadteRole uur = new UserUpadteRole();
+        BeanUtils.copyProperties(user,uur);
+        String[] roles = {"user"};
+        uur.setRoleNames(roles);
+        userService.tableEditRole(uur);
         ret.put("returnCode", ReturnMsgEnum.ADD_DATA_SUCCESS.getValue());
         ret.put("returnMsg", ReturnMsgEnum.ADD_DATA_SUCCESS.getName());
         return ret;

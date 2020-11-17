@@ -1,4 +1,4 @@
-
+//可以编写多个$(document).ready(function (){}) !
 
 var btnUploadText = '选择图片';
 
