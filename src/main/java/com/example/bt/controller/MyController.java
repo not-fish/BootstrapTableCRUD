@@ -188,7 +188,7 @@ public class MyController implements WebMvcConfigurer{
             System.out.println("若不存在该目录，则创建目录");
             savePathFile.mkdir();
         }
-        String filename = new Date().getTime() + "." + suffix;
+        String filename = System.currentTimeMillis() + "." + suffix;
         try {
             //将文件保存指定目录
             photo.transferTo(new File(savePath + filename));
@@ -323,7 +323,7 @@ public class MyController implements WebMvcConfigurer{
             System.out.println("若不存在该目录，则创建目录");
             savePathFile.mkdir();
         }
-        String filename = new Date().getTime() + "." + suffix;
+        String filename = System.currentTimeMillis() + "." + suffix;
         try {
             //将文件保存指定目录
             photo.transferTo(new File(savePath + filename));
