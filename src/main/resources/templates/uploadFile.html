@@ -118,7 +118,7 @@
             formData.append('photo', document.getElementById('documentFile').files[0]);
             $.ajax({
                 type: "POST",
-                url:"http://localhost:8083/uploadFile",//后台接口
+                url:"http://localhost:8084/uploadFile",//后台接口
                 dataType: "json",
                 data:formData,
                 fileElementId:"file",  // 文件的id
@@ -146,7 +146,7 @@
     function downloadFile() {
         var fileName = $('#downloadFileName').val();
         console.log("fileName = "+fileName)
-        var url = "http://localhost:8083/downloadPhoto/"+fileName;
+        var url = "http://localhost:8084/downloadPhoto/"+fileName;
         window.location.href=url;
     }
 

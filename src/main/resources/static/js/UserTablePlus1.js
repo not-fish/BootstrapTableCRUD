@@ -170,7 +170,7 @@ function uploadImg() {
         formData.append('photo', document.getElementById('imagePic').files[0]);
         $.ajax({
             type: "POST",
-            url:"http://localhost:8083/uploadPhoto",//后台接口
+            url:"http://localhost:8084/uploadPhoto",//后台接口
             dataType: "json",
             data:formData,
             fileElementId:"file",  // 文件的id
@@ -205,7 +205,7 @@ function uploadImgUpdate() {
         formData.append('photo', document.getElementById('imagePic_update').files[0]);
         $.ajax({
             type: "POST",
-            url:"http://localhost:8083/uploadPhoto",//后台接口
+            url:"http://localhost:8084/uploadPhoto",//后台接口
             dataType: "json",
             data:formData,
             fileElementId:"file",  // 文件的id
@@ -245,7 +245,7 @@ function updateMsg() {
     $('#id_update').attr("value",rowItem.userId);
     $('#name_update').attr("value",rowItem.userName);
     $('#phone_update').attr("value",rowItem.userPhone);
-    var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.userImg;
+    var filePath = "http://localhost:8084/downloadPhoto/"+rowItem.userImg;
     $('#img_update_show').attr("src",filePath);
 
     //身份栏显示
@@ -294,7 +294,7 @@ function updateMsgAjax() {
 
     $.ajax({
         type: "POST",
-        url:"http://localhost:8083/table/edit",//后台接口
+        url:"http://localhost:8084/table/edit",//后台接口
         dataType: "json",
         contentType:"application/json",
         data:JSON.stringify(data),
@@ -365,7 +365,7 @@ function deleteMsgAjax() {
 
     $.ajax({
         type: "POST",
-        url:"http://localhost:8083/table/delete",//后台接口
+        url:"http://localhost:8084/table/delete",//后台接口
         dataType: "json",
         contentType:"application/json",
         data:JSON.stringify(data),
@@ -414,7 +414,7 @@ function addMsgAjax(){
         data["userPassword"] =  password;
         $.ajax({
             type: "POST",
-            url:"http://localhost:8083/table/add",//后台接口
+            url:"http://localhost:8084/table/add",//后台接口
             dataType: "json",
             contentType:"application/json",
             data:JSON.stringify(data),
@@ -453,7 +453,7 @@ function queMsg(){
 
     //如果什么也没有填，则查询到所有数据
     if(id === ''&& name === ''&& phone === ''){
-        $('#teacher_table').bootstrapTable('refreshOptions',{url:"http://localhost:8083/table/all"});
+        $('#teacher_table').bootstrapTable('refreshOptions',{url:"http://localhost:8084/table/all"});
     }else {
         var data = {};
         data["userId"] =  id;
@@ -463,7 +463,7 @@ function queMsg(){
 
         $.ajax({
             type: "POST",
-            url:"http://localhost:8083/table/query",//后台接口
+            url:"http://localhost:8084/table/query",//后台接口
             dataType: "json",
             contentType:"application/json",
             data:JSON.stringify(data),
@@ -499,7 +499,7 @@ function readMsg(){
     $('#id_read').attr("value",rowItem.userId);
     $('#name_read').attr("value",rowItem.userName);
     $('#phone_read').attr("value",rowItem.userPhone);
-    var filePath = "http://localhost:8083/downloadPhoto/"+rowItem.userImg;
+    var filePath = "http://localhost:8084/downloadPhoto/"+rowItem.userImg;
     $('#img_read_show').attr("src",filePath);
     console.log(filePath)
 
@@ -555,7 +555,7 @@ function identifyFormatter(value, row, index) {
 function imageFormatter(value) {
     var imgName = value;
     console.log('imgName = '+imgName);
-    return '<img src="http://localhost:8083/downloadPhoto/'+imgName +'"'+ 'alt="" style="weight:30px;height:30px">';
+    return '<img src="http://localhost:8084/downloadPhoto/'+imgName +'"'+ 'alt="" style="weight:30px;height:30px">';
 }
 
 //菜单栏的链接跳转
