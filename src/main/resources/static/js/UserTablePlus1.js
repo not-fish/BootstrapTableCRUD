@@ -40,8 +40,8 @@ $(document).ready(function () {
         $('#wrapper').toggleClass('toggled');
     })
 });
-//*************左侧菜单栏部分************
 
+//***************图片上传******************
 $(document).ready(function () {
     $("#selectImg").text(btnUploadText)
     $(".imageShow").hide()
