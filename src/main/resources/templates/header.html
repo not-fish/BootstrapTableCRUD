@@ -1,0 +1,68 @@
+<style>
+    body{
+        margin: 0;
+    }
+
+    .autumnHeaderClass{
+        height: 160px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .autumnDivClass{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        --offset: 0px;
+        --blur: 2px;
+    }
+
+    .autumnImgClass{
+        display: block;
+        width: 110%;
+        height: 100%;
+        object-fit: cover;
+
+        transform: translateX(var(--offset));
+        filter: blur(var(--blur));
+    }
+</style>
+
+<script>
+    const images = document.querySelectorAll('.autumnImgClass');
+
+    document.querySelector('.autumnHeaderClass').addEventListener('mousemove',(e) =>{
+        let percentage = e.clientX / window.outerWidth;
+        let offset = 10*percentage;
+        let blur = 20;
+
+        for(let [index,image] of images.entries()){
+            offset *=1.3;
+
+            let blurValue = (Math.pow((index / images.length - percentage),2) * blur);
+
+            image.style.setProperty('--offset',`${offset}px`);
+            image.style.setProperty('--blur',`${blurValue}px`);
+        }
+    })
+</script>
+
+<body>
+
+
+<header class="autumnHeaderClass">
+    <div class="autumnDivClass"><img src="/img/autumn/a1.png" class="autumnImgClass"></div>
+    <div class="autumnDivClass"><img src="/img/autumn/a2.png" class="autumnImgClass"></div>
+    <div class="autumnDivClass"><img src="/img/autumn/a3.png" class="autumnImgClass"></div>
+    <div class="autumnDivClass"><img src="/img/autumn/a4.png" class="autumnImgClass"></div>
+    <div class="autumnDivClass"><img src="/img/autumn/a5.png" class="autumnImgClass"></div>
+    <div class="autumnDivClass"><img src="/img/autumn/a6.png" class="autumnImgClass"></div>
+</header>
+
+</body>

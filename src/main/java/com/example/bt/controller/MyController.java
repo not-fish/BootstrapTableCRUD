@@ -242,7 +242,6 @@ public class MyController implements WebMvcConfigurer{
                     OutputStream os = response.getOutputStream();
                     int i = bis.read(buffer);
                     while(i!=-1){
-                        System.out.println("读到内容了："+i);
                         os.write(buffer,0,i);
                         i=bis.read(buffer);
                     }

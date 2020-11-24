@@ -565,13 +565,16 @@ $(function () {
 
     $('#toUserTablePage').click(function () {
         $('#principalPart').empty();
-        console.log("跳转至用户表");
         $('#principalPart').load('UserTable.html');
     });
 
     $('#toHomePage').click(function () {
         $('#principalPart').empty();
-        console.log("跳转至用户表");
         $('#principalPart').load('index.html');
+    });
+
+    $('#toAutumnPage').click(function () {
+        $('#principalPart').empty();
+        $('#principalPart').load('header.html');
     });
 });
