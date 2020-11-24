@@ -1,0 +1,156 @@
+<!-- 文件上传与下载（单例demo，与网页无关） -->
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <!-- 引入bootstrap样式 -->
+    <link href="/css/bootstrap.css" rel="stylesheet">
+    <!-- 引入bootstrap-table样式 -->
+    <link href="/css/bootstrap-table.css" rel="stylesheet">
+    <!-- jquery -->
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <!-- bootstrap-table.min.js -->
+    <script src="/js/bootstrap-table.js"></script>
+    <!-- 引入中文语言包 -->
+    <script src="/js/bootstrap-table-zh-CN.js"></script>
+</head>
+
+
+<body>
+<div class="imageWrapper">
+    <div class="row">
+        <div class="col-xs-4" style="margin-top: 20px">
+            <div>
+                <button id="selectFile" type="button" class="btnUpload"></button>
+                <input id="documentFile" name="documentFile" type="file"
+                       accept=".doc,.docx,.xls,.xlsx" style="display:none" />
+            </div>
+
+            <div class="fontTip">
+                限上传不超过10M的doc,docx,xls,xlsx格式的文件
+            </div>
+            <button id="uploadButton" type="button" onclick="uploadFile();">上传</button>
+        </div>
+    </div>
+    <input id="downloadFileName" type="text" readonly="readonly">
+    <div>
+        <button type="button"  onclick="downloadFile()">点击下载</button>
+    </div>
+</div>
+</body>
+
+<script type="text/javascript">
+    var btnUploadText = '选择文件';
+    $(document).ready(function () {
+        $("#selectFile").text(btnUploadText)
+        $('#selectFile').click(function () {
+            $('#documentFile').click();
+        });
+        $("#documentFile").on("change", function (e) {
+            var file = e.target.files[0]; //获取图片资源
+            var fileTypes = ["doc", "docx", "xls", "xlsx","txt"];
+            var bTypeMatch = false
+            for (var i = 0; i < fileTypes.length; i++) {
+                var start = file.name.lastIndexOf(".");
+                var fileType = file.name.substring(start + 1);
+                if (fileType.toLowerCase() == fileTypes[i]) {
+                    bTypeMatch = true;
+                    break;
+                }
+            }
+            if (bTypeMatch) {
+                if (file.size <= 1024 * 1024 * 10) {
+                    var reader = new FileReader();
+                    reader.readAsDataURL(file); // 读取文件
+                    // 渲染文件
+                    reader.onload = function (arg) {
+                        $(".imageShow").show()
+                        $("#uploadImageShow").attr("src", arg.target.result)
+                        btnUploadText = '重新上传'
+                        $("#selectFile").text(btnUploadText)
+                    }
+                } else {
+                    alert('仅支持不超过10M的文件');
+                    emptyImageUpload("#documentFile")
+                    $("#uploadImageShow").attr("src", "")
+                    $(".imageShow").hide()
+                    btnUploadText = '上传'
+                    $("#selectFile").text(btnUploadText)
+                    return false;
+                }
+            } else {
+                alert('仅限doc，docx，xls，xlsx文件格式');
+                emptyImageUpload("#documentFile")
+                $("#uploadImageShow").attr("src", "")
+                $(".imageShow").hide()
+                btnUploadText = '上传'
+                $("#selectFile").text(btnUploadText)
+                return false;
+            }
+        });
+    })
+    //清空上传文件信息
+    function emptyImageUpload(selector) {
+        var fi;
+        var sourceParent;
+        if (selector) {
+            fi = $(selector);
+            sourceParent = fi.parent();
+        } else {
+            return;
+        }
+        $("<form id='tempImgForm'></form>").appendTo(document.body);
+
+        var tempImgForm = $("#tempImgForm");
+        tempImgForm.append(fi);
+        tempImgForm.get(0).reset();
+        sourceParent.append(fi);
+        tempImgForm.remove();
+    }
+
+    function uploadFile() {
+        if($("#documentFile").val() != "") {
+            //创建FormData对象
+            var formData = new FormData();
+            formData.append('photo', document.getElementById('documentFile').files[0]);
+            $.ajax({
+                type: "POST",
+                url:"http://localhost:8084/uploadFile",//后台接口
+                dataType: "json",
+                data:formData,
+                fileElementId:"file",  // 文件的id
+                async: true, // 使用同步操作
+                contentType:false,        /*不可缺*/
+                processData: false,         /*不可缺*/
+                success: function(data,status,xhr){
+                    console.log("返回信息:"+data.msg+" "+data.filepath+data.filename);
+                    console.log("返回码："+data.status+" code:"+data.code+" status:"+status+" xhr:"+xhr.status)
+                    if(xhr.status === 200) {
+                        alert("上传成功:"+xhr.status+" OK");
+                        $('#downloadFileName').attr("value",data.filename)
+                    }
+                },
+                error: function (d,status,xhr) {
+                    console.log("返回码："+d.status+" code:"+d.code+" status:"+status+" xhr:"+xhr.status)
+                    alert("上传失败："+d.status);
+                },
+            });
+        } else {
+            alert("请先选择文件");
+        }
+    }
+
+    function downloadFile() {
+        var fileName = $('#downloadFileName').val();
+        console.log("fileName = "+fileName)
+        var url = "http://localhost:8084/downloadPhoto/"+fileName;
+        window.location.href=url;
+    }
+
+</script>
+</html>
