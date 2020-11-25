@@ -20,22 +20,7 @@ function autumn() {
         }
     });
 
-//定时眨眼
-    setInterval("girlAnimation()", 4000);
+
 }
 
-function girlAnimation() {
 
-    setTimeout(function () {
-        $('#girlPic').attr("src","/img/autumn/a2_2.png");
-    },500);
-    setTimeout(function () {
-        $('#girlPic').attr("src","/img/autumn/a2_3.png");
-    },600);
-    setTimeout(function () {
-        $('#girlPic').attr("src","/img/autumn/a2_2.png");
-    },700);
-    setTimeout(function () {
-        $('#girlPic').attr("src","/img/autumn/a2_1.png");
-    },800);
-}
