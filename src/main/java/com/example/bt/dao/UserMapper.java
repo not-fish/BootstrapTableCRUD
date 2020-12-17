@@ -21,4 +21,5 @@ public interface UserMapper {
     int updateRole(@Param("userId")String userId,@Param("roleId")String roleId);
     String findRoleByName(@Param("roleName")String roleName);
     void deleteRoleByUserId(@Param("userId")String userId);
+    int selectByName(String name);
 }

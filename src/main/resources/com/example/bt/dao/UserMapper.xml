@@ -108,4 +108,9 @@
         WHERE user_id = #{userId}
     </delete>
 
+    <select id="selectByName" parameterType="String" resultType="int">
+        SELECT count(*) FROM t_user
+        WHERE  user_name = #{name}
+    </select>
+
 </mapper>
