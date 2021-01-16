@@ -222,6 +222,13 @@ public class MyController implements WebMvcConfigurer{
         return path;
     }
 
+    /**
+     * 图片下载
+     * @param fileN
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping(value = "/downloadPhoto/{fileN}")
     public void downloadPhoto(@PathVariable String fileN,HttpServletRequest request,HttpServletResponse response) throws IOException {
@@ -255,6 +262,13 @@ public class MyController implements WebMvcConfigurer{
         }
     }
 
+    /**
+     * 图片下载
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
     @ResponseBody
     @RequestMapping(value = "/downloadFile")
     public String downloadFile01(HttpServletRequest request,HttpServletResponse response) throws IOException {
