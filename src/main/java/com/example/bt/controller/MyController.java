@@ -222,6 +222,12 @@ public class MyController implements WebMvcConfigurer{
         return path;
     }
 
+    /***********************【注意】**************************/
+    /**
+     * 如果写下载的接口，建议返回类型为void，然后用response.getOutputStream()获取流，然后往里写数据
+     * 如果是非void的，就不要用流式写数据回去
+     */
+
     /**
      * 图片下载
      * @param fileN
