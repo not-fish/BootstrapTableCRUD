@@ -73,16 +73,10 @@
             LEFT JOIN t_role r
             ON ur.role_id = r.id
             WHERE
-            <trim >
-                <if test="userId != null and userId != ''">u.user_id=</if>
-                <if test="userName != null and userName != ''">u.user_name=</if>
-                <if test="userPhone != null and userPhone != ''">u.user_phone=</if>
-            </trim>
-
-            <trim>
-                <if test="userId != null and userId != ''">#{userId}</if>
-                <if test="userName != null and userName != ''">#{userName}</if>
-                <if test="userPhone != null and userPhone != ''">#{userPhone}</if>
+            <trim suffixOverrides="and">
+                <if test="userId != null and userId != ''">u.user_id=#{userId} and</if>
+                <if test="userName != null and userName != ''">u.user_name=#{userName} and</if>
+                <if test="userPhone != null and userPhone != ''">u.user_phone=#{userPhone} and</if>
             </trim>
     </select>
 

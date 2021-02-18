@@ -141,6 +141,7 @@ public class MyController implements WebMvcConfigurer{
     @ResponseBody
     @RequestMapping(value = "/table/query")
     public List<UserRole> tableQuery(@RequestBody User user){
+        logger.info(String.valueOf(user));
 //        System.out.println("/table/query:"+myTableDTO.getStatus());
         List<UserRole> list =  userService.tableQuery(user);
         return list;
